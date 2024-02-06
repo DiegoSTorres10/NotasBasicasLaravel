@@ -1,0 +1,47 @@
+*******************************************
+Para la creacion de un proyecto con composer es: composer create-project laravel/laravel example-app
+Modificar el .env con el motor de mysql
+
+************************************
+Creacion de los MODELOS y MIGRACIONES
+es con el comando: php artisan make:model ModeloSingular -m
+
+-------------------
+Migraciones
+Para crear una llave forane es: $table->foreignId('modelo_id')->constrained()->onDelete('cascade');
+
+----------------
+Modelo
+Aqui lo importante es crear las relaciones para hacerlo de manera más rapida
+return $this->hasMany(Order::class); // Esto es para crear uno de mucho a uno
+
+
+********************************************
+Creacion de layout/layout.blade.php
+ES para la creacion de una base el cual se ocuap el yield('nombre') para que en la vista
+se acceda con @extends('ubicacion') y @section
+
+
+*******************************************
+Rutas
+Para la creación de las rutas es: Route::resource('Ventas', VentasController::class );
+Donde sera primero el nombre se llarama y luego el controlador
+
+*******************************************
+Controlador: Para que se cree el controlador es
+php artisan make:controller CustomerController --model=Customer --resource
+COn eso colocará los metodos necesarios
+
+
+********************************
+Validaciones validated
+Debemos Colocar el comando: php artisan make:request AccionModeloRequest
+Modificar el authorize a true
+Arreglar en el metodo rules tus reglas return [
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:customers',
+            // Agrega aquí otras reglas según tu modelo
+        ];
+Y luego en tu metodo de tu controlador vas a cambiar el Request por el nombre de tu archivo que le hallas colocado
+y lo llamaras con $data = $request->validated(); 
+Y por ulitmo en tu vista manejar los errores con  @error('NombreAtributo')
